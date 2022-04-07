@@ -109,7 +109,7 @@ class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
 
         $this->tag->addAttribute('action', trim($uri));
         if (($this->arguments['addSuggestUrl'] ?? null)) {
-            $this->tag->addAttribute('data-suggest', $this->getSuggestUrl($this->arguments['additionalFilters'], $pageUid));
+            $this->tag->addAttribute('data-suggest', $this->getSuggestUrl($this->arguments['additionalFilters'], (int)$pageUid));
         }
         $this->tag->addAttribute('data-suggest-header', htmlspecialchars($this->arguments['suggestHeader'] ?? ''));
         $this->tag->addAttribute('accept-charset', $this->frontendController->metaCharset ?? null);
@@ -124,7 +124,7 @@ class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
         // @extensionScannerIgnoreLine
         $this->getTemplateVariableContainer()->add('existingParameters', $this->getExistingSearchParameters());
         // @extensionScannerIgnoreLine
-        $this->getTemplateVariableContainer()->add('addPageAndLanguageId', !$this->getIsSiteManagedSite($pageUid));
+        $this->getTemplateVariableContainer()->add('addPageAndLanguageId', !$this->getIsSiteManagedSite((int)$pageUid));
         $formContent = $this->renderChildren();
         // @extensionScannerIgnoreLine
         $this->getTemplateVariableContainer()->remove('addPageAndLanguageId');
@@ -190,10 +190,10 @@ class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
      * When no speaking urls are active (e.g. with TYPO3 8 and no realurl) this information is passed as query parameter
      * and would get lost when it is only part of the query arguments in the action parameter of the form.
      *
-     * @param $pageId
+     * @param int $pageId
      * @return bool
      */
-    protected function getIsSiteManagedSite($pageId): bool
+    protected function getIsSiteManagedSite(int $pageId): bool
     {
         return SiteUtility::getIsSiteManagedSite($pageId);
     }
@@ -248,7 +248,7 @@ class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
         $uriBuilder = $this->getControllerContext()->getUriBuilder();
         return $uriBuilder
             ->reset()
-            ->setTargetPageUid($pageUid)
+            ->setTargetPageUid((int)$pageUid)
             ->setTargetPageType($this->arguments['pageType'] ?? 0)
             ->setNoCache($this->arguments['noCache'] ?? false)
             ->setArguments($this->arguments['additionalParams'] ?? [])
