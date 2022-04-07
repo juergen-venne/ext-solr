@@ -104,6 +104,7 @@ class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
         if ($pageUid === null && !empty($this->getTypoScriptConfiguration()->getSearchTargetPage())) {
             $pageUid = $this->getTypoScriptConfiguration()->getSearchTargetPage();
         }
+        $pageUid = (int)$pageUid;
 
         $uri = $this->buildUriFromPageUidAndArguments($pageUid);
 
@@ -240,15 +241,15 @@ class SearchFormViewHelper extends AbstractSolrFrontendTagBasedViewHelper
     }
 
     /**
-     * @param int|null $pageUid
+     * @param int $pageUid
      * @return string
      */
-    protected function buildUriFromPageUidAndArguments($pageUid): string
+    protected function buildUriFromPageUidAndArguments(int $pageUid): string
     {
         $uriBuilder = $this->getControllerContext()->getUriBuilder();
         return $uriBuilder
             ->reset()
-            ->setTargetPageUid((int)$pageUid)
+            ->setTargetPageUid($pageUid)
             ->setTargetPageType($this->arguments['pageType'] ?? 0)
             ->setNoCache($this->arguments['noCache'] ?? false)
             ->setArguments($this->arguments['additionalParams'] ?? [])
