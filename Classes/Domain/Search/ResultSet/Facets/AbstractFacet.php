@@ -16,6 +16,8 @@
 namespace ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\Facets;
 
 use ApacheSolrForTypo3\Solr\Domain\Search\ResultSet\SearchResultSet;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
@@ -102,16 +104,8 @@ abstract class AbstractFacet
         $this->field = $field;
         $this->label = $label;
         $this->configuration = $configuration;
-    }
 
-    /**
-     * Injects the object manager
-     *
-     * @param ObjectManagerInterface $objectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
     }
 
     /**
