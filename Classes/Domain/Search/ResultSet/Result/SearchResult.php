@@ -180,7 +180,7 @@ class SearchResult extends Document
      */
     public function getContent(): string
     {
-        return $this->fields['content'] ?? '';
+        return (string) $this->fields['content'] ?? '';
     }
 
     /**
@@ -196,7 +196,7 @@ class SearchResult extends Document
      */
     public function getType(): string
     {
-        return $this->fields['type'] ?? '';
+        return (string) ($this->fields['type'] ?? '');
     }
 
     /**
@@ -205,7 +205,7 @@ class SearchResult extends Document
      */
     public function getId(): string
     {
-        return $this->fields['id'] ?? '';
+        return (string) ($this->fields['id'] ?? '');
     }
 
     /**
@@ -213,7 +213,7 @@ class SearchResult extends Document
      */
     public function getScore(): float
     {
-        return $this->fields['score'] ?? 0.0;
+        return (float) ($this->fields['score'] ?? 0.0);
     }
 
     /**
